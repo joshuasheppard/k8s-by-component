@@ -1,0 +1,41 @@
+# Inspect the containers with the following using their hash at the end
+
+# Look at the pods - none running yet
+sudo docker ps
+
+# Copy nginx definition into manifests/
+cp $PWD/nginx.yaml $PWD/manifests/nginx.yaml
+
+# Look at the pods - should see 3 after a few seconds
+sudo docker ps
+
+# See how they are configured related to each other
+sudo docker inspect --format '{{ .NetworkSettings.IPAddress  }}' <hash>
+
+# See how they are networked
+sudo docker inspect --format '{{ .HostConfig.NetworkMode  }}' <hash>
+
+# Confirm nginx is responding
+curl --stderr /dev/null http://172.17.0.2 | head -4
+
+# Confirm log truncator is working
+sudo docker exec -t <hash> cat /logdir/access.log
+
+# Inspect the health endpoint
+curl http://localhost:10255/healthz
+
+# Get status of pods
+curl --stderr /dev/null http://localhost:10255/pods | jq . | head
+
+# Get info about machine kubelet is running on
+curl --stderr /dev/null  http://localhost:10255/spec/ | jq . | head
+
+# Remove the manifest
+rm $PWD/manifests/nginx.yaml
+
+# Verify containers have shut down (takes a few seconds)
+sudo docker ps
+curl --stderr /dev/null http://localhost:10255/pods
+
+# Ctrl-c in first terminal to shutdown kubelet
+
