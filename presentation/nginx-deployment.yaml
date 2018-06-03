@@ -6,11 +6,9 @@ spec:
   selector:
     matchLabels:
       app: nginx
-  replicas: 2 # tells deployment to run 2 pods matching the template
-  template: # create pods using pod definition in this template
+  replicas: 2
+  template:
     metadata:
-      # unlike pod-nginx.yaml, the name is not included in the meta data as a unique name is
-      # generated from the deployment name
       labels:
         app: nginx
     spec:
@@ -28,7 +26,7 @@ spec:
         imagePullPolicy: IfNotPresent
         command:
         - /bin/sh
-          args: [-c, 'while true; do cat /dev/null > /logdir/access.log; sleep 10; done']
+        args: [-c, 'while true; do cat /dev/null > /logdir/access.log; sleep 10; done']
         volumeMounts:
         - mountPath: /logdir
           name: nginx-logs
