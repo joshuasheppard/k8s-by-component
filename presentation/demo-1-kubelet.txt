@@ -1,4 +1,11 @@
-# Inspect the containers with the following using their hash at the end
+# Reference Commands for `kubelet` portion of presentation
+
+# Validate docker
+docker --version
+sudo docker run hello-world
+
+# Run kubelet from manifests directory
+sudo ./kubelet --pod-manifest-path=$PWD/manifests
 
 # Look at the pods - none running yet
 sudo docker ps
@@ -9,6 +16,7 @@ cp $PWD/nginx.yaml $PWD/manifests/nginx.yaml
 # Look at the pods - should see 3 after a few seconds
 sudo docker ps
 
+# Inspect the containers with the following using their hash at the end
 # See how they are configured related to each other
 sudo docker inspect --format '{{ .NetworkSettings.IPAddress  }}' <hash>
 
