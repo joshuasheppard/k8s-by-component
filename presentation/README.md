@@ -11,7 +11,5 @@ referenced at the root of this repo.
 
 ## Demo `kubelet`
 
-* [demo-1-validate-docker.sh](demo-1-validate-docker.sh)
-* [demo-2-kubelet.sh](demo-2-kubelet.sh)
-* [demo-2.1-kubelet.txt](demo-2.1-kubelet.txt)
+* [demo-1-kubelet.txt](demo-1-kubelet.txt)
 
