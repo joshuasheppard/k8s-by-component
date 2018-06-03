@@ -27,6 +27,9 @@ wget https://raw.githubusercontent.com/joshuasheppard/k8s-by-component/master/pa
 # Get pod definition
 wget https://raw.githubusercontent.com/joshuasheppard/k8s-by-component/master/part3/nginx.yaml
 
+# Get deployment definition
+wget https://raw.githubusercontent.com/joshuasheppard/k8s-by-component/master/presentation/nginx-deployment.yaml
+
 # Create manifests directory for bare kubelet example
 mkdir manifests
 
