@@ -47,3 +47,45 @@ curl --stderr /dev/null http://localhost:10255/pods
 
 # Ctrl-c in first terminal to shutdown kubelet
 
+# Starting etcd
+sudo docker run --volume=$PWD/etcd-data:/default.etcd \
+--detach --net=host quay.io/coreos/etcd > etcd-container-id
+
+# Starting kube-apiserver with etcd
+sudo ./kube-apiserver \
+--etcd-servers=http://127.0.0.1:2379 \
+--service-cluster-ip-range=10.0.0.0/16
+
+# Check API for nodes
+curl http://localhost:8080/api/v1/nodes
+
+# Check API for pods
+curl http://localhost:8080/api/v1/pods
+
+# Start kubelet pointing to API specified in kubeconfig
+sudo ./kubelet --kubeconfig=$PWD/kubeconfig
+
+# Convert the YAML to JSON for use with API
+ruby -ryaml -rjson \
+-e 'puts JSON.pretty_generate(YAML.load(ARGF))' < nginx.yaml > nginx.json
+
+# POST the nginx pod definition to the API
+curl \
+--stderr /dev/null \
+--header "Content-Type: application/json" \
+--request POST http://localhost:8080/api/v1/namespaces/default/pods \
+--data @nginx.json | jq 'del(.spec.containers, .spec.volumes)'
+
+# Look in the default namespace for pods
+curl http://localhost:8080/api/v1/namespaces/default/pods
+
+# Cleaner view with jq
+curl --stderr /dev/null http://localhost:8080/api/v1/namespaces/default/pods | \
+> jq '.items[] | { name: .metadata.name, status: .status } | del(.status.containerStatuses)'
+
+# Remove the pod via API
+curl \
+--stderr /dev/null \
+--request DELETE http://localhost:8080/api/v1/namespaces/default/pods/nginx
+
+
