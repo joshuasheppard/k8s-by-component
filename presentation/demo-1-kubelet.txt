@@ -13,9 +13,6 @@ sudo docker ps
 # Copy nginx definition into manifests/
 cp $PWD/nginx.yaml $PWD/manifests/nginx.yaml
 
-# Look at the pods - should see 3 after a few seconds
-sudo docker ps
-
 # Inspect the containers with the following using their hash at the end
 # See how they are configured related to each other
 sudo docker inspect --format '{{ .NetworkSettings.IPAddress  }}' <hash>
@@ -24,7 +21,7 @@ sudo docker inspect --format '{{ .NetworkSettings.IPAddress  }}' <hash>
 sudo docker inspect --format '{{ .HostConfig.NetworkMode  }}' <hash>
 
 # Confirm nginx is responding
-curl --stderr /dev/null http://172.17.0.2 | head -4
+curl http://172.17.0.2
 
 # Confirm log truncator is working
 sudo docker exec -t <hash> cat /logdir/access.log
@@ -33,19 +30,13 @@ sudo docker exec -t <hash> cat /logdir/access.log
 curl http://localhost:10255/healthz
 
 # Get status of pods
-curl --stderr /dev/null http://localhost:10255/pods | jq . | head
+curl http://localhost:10255/pods | jq .
 
 # Get info about machine kubelet is running on
-curl --stderr /dev/null  http://localhost:10255/spec/ | jq . | head
+curl http://localhost:10255/spec/ | jq .
 
 # Remove the manifest
 rm $PWD/manifests/nginx.yaml
-
-# Verify containers have shut down (takes a few seconds)
-sudo docker ps
-curl --stderr /dev/null http://localhost:10255/pods
-
-# Ctrl-c in first terminal to shutdown kubelet
 
 # Starting etcd
 sudo docker run --volume=$PWD/etcd-data:/default.etcd \
@@ -71,7 +62,6 @@ ruby -ryaml -rjson \
 
 # POST the nginx pod definition to the API
 curl \
---stderr /dev/null \
 --header "Content-Type: application/json" \
 --request POST http://localhost:8080/api/v1/namespaces/default/pods \
 --data @nginx.json | jq 'del(.spec.containers, .spec.volumes)'
@@ -80,13 +70,11 @@ curl \
 curl http://localhost:8080/api/v1/namespaces/default/pods
 
 # Cleaner view with jq
-curl --stderr /dev/null http://localhost:8080/api/v1/namespaces/default/pods | \
+curl http://localhost:8080/api/v1/namespaces/default/pods | \
 > jq '.items[] | { name: .metadata.name, status: .status } | del(.status.containerStatuses)'
 
 # Remove the pod via API
-curl \
---stderr /dev/null \
---request DELETE http://localhost:8080/api/v1/namespaces/default/pods/nginx
+curl --request DELETE http://localhost:8080/api/v1/namespaces/default/pods/nginx
 
 # Scale deployments
 ./kubectl scale --replicas=1 -f nginx-deployment.yaml
