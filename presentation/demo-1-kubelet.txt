@@ -88,4 +88,6 @@ curl \
 --stderr /dev/null \
 --request DELETE http://localhost:8080/api/v1/namespaces/default/pods/nginx
 
+# Scale deployments
+./kubectl scale --replicas=1 -f nginx-deployment.yaml
 
