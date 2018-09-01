@@ -33,6 +33,10 @@ https://raw.githubusercontent.com/joshuasheppard/k8s-by-component/master/part5/k
 wget -q --show-progress --https-only --timestamping \
 https://raw.githubusercontent.com/joshuasheppard/k8s-by-component/master/part5/nginx.yaml
 
+# Get pod definition with node name
+wget -q --show-progress --https-only --timestamping \
+https://raw.githubusercontent.com/joshuasheppard/k8s-by-component/master/part5/nginx-nodeName.yaml
+
 # Get deployment definition
 wget -q --show-progress --https-only --timestamping \
 https://raw.githubusercontent.com/joshuasheppard/k8s-by-component/master/part5/nginx-deployment.yaml
