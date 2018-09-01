@@ -1,17 +1,7 @@
 # Reference Commands for `kubelet` portion of presentation
 
-# Validate docker
-docker --version
-sudo docker run hello-world
-
 # Run kubelet from manifests directory
 sudo ./kubelet --pod-manifest-path=$PWD/manifests
-
-# Look at the pods - none running yet
-sudo docker ps
-
-# Copy nginx definition into manifests/
-cp $PWD/nginx.yaml $PWD/manifests/nginx.yaml
 
 # Inspect the containers with the following using their hash at the end
 # See how they are configured related to each other
@@ -19,9 +9,6 @@ sudo docker inspect --format '{{ .NetworkSettings.IPAddress  }}' <hash>
 
 # See how they are networked
 sudo docker inspect --format '{{ .HostConfig.NetworkMode  }}' <hash>
-
-# Confirm nginx is responding
-curl http://172.17.0.2
 
 # Confirm log truncator is working
 sudo docker exec -t <hash> cat /logdir/access.log
@@ -34,9 +21,6 @@ curl http://localhost:10255/pods | jq .
 
 # Get info about machine kubelet is running on
 curl http://localhost:10255/spec/ | jq .
-
-# Remove the manifest
-rm $PWD/manifests/nginx.yaml
 
 # Starting etcd
 sudo docker run --volume=$PWD/etcd-data:/default.etcd \
