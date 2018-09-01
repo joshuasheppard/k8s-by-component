@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  nodeName: ubuntu-bionic
+  containers:
+  - name: nginx
+    image: nginx
+    imagePullPolicy: IfNotPresent
+    ports:
+    - containerPort: 80
+    volumeMounts:
+    - mountPath: /var/log/nginx
+      name: nginx-logs
+  - name: log-truncator
+    image: busybox
+    imagePullPolicy: IfNotPresent
+    command:
+    - /bin/sh
+    args: [-c, 'while true; do cat /dev/null > /logdir/access.log; sleep 10; done']
+    volumeMounts:
+    - mountPath: /logdir
+      name: nginx-logs
+  volumes:
+  - name: nginx-logs
+    emptyDir: {}

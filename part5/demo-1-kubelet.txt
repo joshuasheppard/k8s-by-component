@@ -1,0 +1,36 @@
+# Reference Commands for `kubelet` portion of presentation
+
+# Run kubelet from manifests directory
+sudo ./kubelet --pod-manifest-path=$PWD/manifests
+
+# Inspect the containers with the following using their hash at the end
+# See how they are configured related to each other
+sudo docker inspect --format '{{ .NetworkSettings.IPAddress  }}' <hash>
+
+# See how they are networked
+sudo docker inspect --format '{{ .HostConfig.NetworkMode  }}' <hash>
+
+# Confirm log truncator is working
+sudo docker exec -t <hash> cat /logdir/access.log
+
+# Starting etcd
+sudo docker run --volume=$PWD/etcd-data:/default.etcd \
+--detach --net=host quay.io/coreos/etcd > etcd-container-id
+
+# Starting kube-apiserver with etcd
+sudo ./kube-apiserver \
+--etcd-servers=http://127.0.0.1:2379 \
+--service-cluster-ip-range=10.0.0.0/16
+
+# Start kubelet pointing to API specified in kubeconfig
+sudo ./kubelet --kubeconfig=$PWD/kubeconfig
+
+# Start kube-scheduler pointing to API specified in kubeconfig
+sudo ./kube-scheduler --kubeconfig=$PWD/kubeconfig
+
+# Start kube-controller-manager pointing to API specified in kubeconfig
+sudo ./kube-controller-manager --kubeconfig=$PWD/kubeconfig
+
+# Scale deployments
+./kubectl scale --replicas=1 -f nginx-deployment.yaml
+
