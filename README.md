@@ -13,5 +13,7 @@ Introducing `kubelet`
 Adding in Kubernetes API Server, `etcd`, and `kubectl`
 * [Kubernetes by Component - Part 3](https://sheppard.in/2018/kubernetes-by-component---part-3/) -
 Looking at `kube-scheduler`
+* [Kubernetes by Component - Part 4](https://sheppard.in/2018/kubernetes-by-component---part-4/) -
+Looking at `kube-controller-manager`
 * Presentation: Dissecting Kubernetes - Presentation files first used at [KCDC](https://www.kcdc.info/) 2018
 
