@@ -29,7 +29,7 @@ sudo ./kubelet --kubeconfig=$PWD/kubeconfig
 sudo ./kube-scheduler --kubeconfig=$PWD/kubeconfig
 
 # Start kube-controller-manager pointing to API specified in kubeconfig
-sudo ./kube-controller-manager --kubeconfig=$PWD/kubeconfig
+sudo ./kube-controller-manager --kubeconfig=$PWD/kubeconfig --service-account-private-key-file=service-account-key.pem
 
 # Scale deployments
 ./kubectl scale --replicas=1 -f nginx-deployment.yaml
