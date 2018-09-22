@@ -30,6 +30,8 @@ mkdir manifests
 mkdir etcd-data
 
 # Generate pem files
+wget -q --show-progress --https-only --timestamping \
+https://raw.githubusercontent.com/joshuasheppard/k8s-by-component/master/part5/generate-service-account-pems.sh
 chmod +x generate-service-account-pems.sh
 ./generate-service-account-pems.sh
 
