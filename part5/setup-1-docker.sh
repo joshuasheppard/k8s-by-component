@@ -2,6 +2,7 @@
 
 # Update the box
 sudo apt-get update
+sudo apt-get upgrade
 
 # Install some software we will need
 sudo apt-get install \
