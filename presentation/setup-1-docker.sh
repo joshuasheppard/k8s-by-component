@@ -2,6 +2,7 @@
 
 # Update the box
 sudo apt-get update
+sudo apt-get upgrade
 
 # Install some software we will need
 sudo apt-get install \
@@ -10,7 +11,12 @@ sudo apt-get install \
     curl \
     jq \
     ruby \
-    software-properties-common
+    software-properties-common \
+    golang-go
+
+# Download and build cfssl, cfssljson in ./go/bin/
+go get -u github.com/cloudflare/cfssl/cmd/cfssl
+go get -u github.com/cloudflare/cfssl/cmd/cfssljson
 
 # Add Docker apt registry and install Docker
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -

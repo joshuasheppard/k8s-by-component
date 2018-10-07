@@ -7,7 +7,7 @@ referenced at the root of this repo.
 ## Priming the Ubuntu Vagrant Box
 
 * [setup-1-docker.sh](setup-1-docker.sh)
-* [setup-2-download-k8s.sh](setup-2-download-k8s.sh)
+* [setup-2-download-k8s-1.12.sh](setup-2-download-k8s-1.12.sh)
 
 ## Demo `kubelet`
 
