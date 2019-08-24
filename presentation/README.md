@@ -9,6 +9,7 @@ referenced at the root of this repo.
 * Start from `vagrant init ubuntu/bionic64`
 * Pick your Kubernetes version and run the setup scripts
 	* [k8s-1.9](k8s-1.9/)
+	* [k8s-1.12](k8s-1.12/)
 	* [k8s-1.15](k8s-1.15/)
 * `demo-script.txt` has some commands that are helpful
 
