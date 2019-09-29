@@ -11,8 +11,14 @@ sudo apt-get install \
     curl \
     jq \
     ruby \
-    software-properties-common \
-    golang-go
+    software-properties-common
+
+# Get updated go version
+wget -q --show-progress --https-only --timestamping \
+https://dl.google.com/go/go1.12.9.linux-amd64.tar.gz
+sudo tar -C /usr/local -xzf go1.12.9.linux-amd64.tar.gz
+echo "export PATH=\$PATH:/usr/local/go/bin" >> ~/.profile
+export PATH=$PATH:/usr/local/go/bin
 
 # Download and build cfssl, cfssljson in ./go/bin/
 go get -u github.com/cloudflare/cfssl/cmd/cfssl
