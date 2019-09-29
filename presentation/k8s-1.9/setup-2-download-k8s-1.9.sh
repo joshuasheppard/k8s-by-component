@@ -10,6 +10,9 @@ https://storage.googleapis.com/kubernetes-release/release/v1.9.11/bin/linux/amd6
 https://storage.googleapis.com/kubernetes-release/release/v1.9.11/bin/linux/amd64/kube-controller-manager
 chmod +x kubelet kube-apiserver kubectl kube-scheduler kube-controller-manager
 
+# Setup `kubectl` autocomplete
+echo 'source <(./kubectl completion bash)' >>~/.bashrc
+
 # Get kubeconfig
 wget -q --show-progress --https-only --timestamping \
 https://raw.githubusercontent.com/joshuasheppard/k8s-by-component/master/part5/kubeconfig
