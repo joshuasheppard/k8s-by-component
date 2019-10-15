@@ -17,5 +17,5 @@ Looking at `kube-scheduler`
 Looking at `kube-controller-manager`
 * [Kubernetes by Component - Part 5](https://sheppard.in/2018/kubernetes-by-component---part-5/) -
 Updgrading to Kubernetes 1.10+
-* Presentation: Dissecting Kubernetes - Presentation files first used at [KCDC](https://www.kcdc.info/) 2018
+* [Presentation: Dissecting Kubernetes](presentation/) - Presentation files first used at [KCDC](https://www.kcdc.info/) 2018
 
